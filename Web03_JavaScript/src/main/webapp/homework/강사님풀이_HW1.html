@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>계산기</title>
+</head>
+<body>
+	<input type="number" id="firstNum">
+	<input type="number" id="secondNum">
+	<button onclick="add()">더하기</button>
+	<button onclick="sub()">빼기</button>
+	<button onclick="mul()">곱하기</button>
+	<button onclick="div()">나누기</button>
+	<button onclick="test()">내용 초기화</button>
+	<div id="output"></div>
+
+	<script type="text/javascript">
+		let fNum = document.getElementById('firstNum');
+		let sNum = document.getElementById('secondNum');
+		let output = document.getElementById('output');
+
+		// input 태그의 입력된 값을 가져오기 위해서는
+		// 함수가 실행되는 시점의 value 값을 가져와야 함
+		function add() {
+			console.log('add() 호출');
+			let x = parseInt(fNum.value);
+			let y = parseInt(sNum.value);
+
+			output.innerHTML += x + ' + ' + y + ' = ' + (x + y) + '<br>';
+		}
+		function sub() {
+			console.log('sub() 호출');
+			let x = parseInt(fNum.value);
+			let y = parseInt(sNum.value);
+
+			output.innerHTML += x + ' - ' + y + ' = ' + (x - y) + '<br>';
+		}
+
+		function mul() {
+			console.log('mul() 호출');
+			let x = parseInt(fNum.value);
+			let y = parseInt(sNum.value);
+
+			output.innerHTML += x + ' * ' + y + ' = ' + (x * y) + '<br>';
+		}
+
+		function div() {
+			console.log('div() 호출');
+			let x = parseInt(fNum.value);
+			let y = parseInt(sNum.value);
+
+			output.innerHTML += x + ' / ' + y + ' = ' + (x / y) + '<br>';
+		}
+		
+		function test() {
+			output.innerHTML = "";
+		}
+	</script>
+
+</body>
+</html>

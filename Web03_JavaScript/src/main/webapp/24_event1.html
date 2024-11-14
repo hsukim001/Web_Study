@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Event</title>
+</head>
+<!-- 
+onload을 해석하면 on ~했을때, load  로드, 로드 했을때 무언가를 실행하겠다. 로 해석할 수 있다.
+onload는 정확하게 브라우저에서 동작을 수행하게된다.
+-->
+<body onload="window.alert('반값습니다.')">
+	<h1 onclick="test1(this)"
+	onmouseover="test2(this)"
+	onmouseout="test3(this)">
+	자바스크립트 이벤트 핸들링(Event Handling)</h1>
+	
+	<script type="text/javascript">
+		let toggle = true;
+		
+		function test1(title) {
+			console.log(title);
+			if(toggle) {
+				title.innerHTML = '자바스크립트 이벤트 처리';
+				toggle = false;
+			} else {
+				title.innerHTML = 'JavaScript Event Handling';
+				toggle = true;
+			}
+		}
+		
+		function test2(title) {
+			title.style.backgroundColor = 'hotpink';
+			title.style.color = 'white';
+		}
+		
+		function test3(title) {
+			title.style.backgroundColor = 'white';
+			title.style.color = 'black';
+		}
+	</script>
+	
+</body>
+</html>

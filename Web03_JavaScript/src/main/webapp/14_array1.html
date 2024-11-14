@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Array1</title>
+</head>
+<body>
+	<h1>자바스크립트 배열(Array)</h1>
+	<div id="output"></div>
+	
+	<script type="text/javascript">
+		let output = document.getElementById('output');
+		
+		// 자바스크립트에서 배열은 사이즈가 정해져 있지 않기때문에 원소의 추가 삭제가 가능하다.
+		// 자바스크립트에서 배열 선언/초기화 방법1 :
+		// let 배열이름 = [원소1, 원소2, ...]
+		let movies = ['트랜스포머', '조커', '베놈'];
+		
+		for(let i = 0; i < movies.length; i++) {
+			output.innerHTML += movies[i] + '<br>';
+		}
+		
+		for(x in movies) {
+			output.innerHTML += x + ' : ' + movies[x] + '<br>';
+		}
+		
+		for(x of movies) {
+			output.innerHTML += x + '<br>';
+		}
+		
+		// 배열 선언/초기화 방법2
+		let games = new Array('스타크래프트', 'LOL');
+		
+	</script>
+	
+</body>
+</html>

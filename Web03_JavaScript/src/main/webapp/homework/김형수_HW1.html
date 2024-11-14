@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<!-- 
+과제 : 두 개의 숫자를 입력받아서 사칙 연산을 하는 웹사이트
+조건 :
+- 2개의 input 태그, 4개의 버튼(더하기, 빼기, 곱하기, 나누기)
+- 데이터를 출력할 div
+- 자바 스크립트 함수를 이용하여 4개의 사칙연산 함수 생성
+add(), sub(), multi(), div()    -->
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>사칙연산 프로그램</title>
+	</head>
+	<body>
+		<div>
+			<input type="text" id="num1">
+			<input type="text" id="num2">
+			
+			<button onclick="add()">더하기</button>
+			<button onclick="sub()">빼기</button>
+			<button onclick="multi()">곱하기</button>
+			<button onclick="div()">나누기</button>
+		</div>
+		<div>
+			<button onclick="reset()">초기화</button>
+		</div>
+		
+		<div id="output"></div>
+				
+		<script type="text/javascript">
+			// 더하기 버튼
+			function add() {
+				let num1 = document.getElementById('num1').value;
+				let num2 = document.getElementById('num2').value;
+				console.log(num1);
+				console.log(num2);
+				
+				let result = parseInt(num1) + parseInt(num2);
+				console.log('합 : ' + result)
+				let output = document.getElementById('output');
+				output.innerHTML = result;
+			}
+			
+			// 빼기 버튼
+			function sub() {
+				let num1 = document.getElementById('num1').value;
+				let num2 = document.getElementById('num2').value;
+				console.log(num1);
+				console.log(num2);
+				
+				let result = parseInt(num1) - parseInt(num2);
+				console.log('빼기 : ' + result)
+				let output = document.getElementById('output');
+				output.innerHTML = result;
+			}
+			
+			// 곱하기 버튼
+			function multi() {
+				let num1 = document.getElementById('num1').value;
+				let num2 = document.getElementById('num2').value;
+				console.log(num1);
+				console.log(num2);
+				
+				let result = parseInt(num1) * parseInt(num2);
+				console.log('곱하기 : ' + result)
+				let output = document.getElementById('output');
+				output.innerHTML = result;
+			}
+			
+			// 나누기 버튼
+			function div() {
+				let num1 = document.getElementById('num1').value;
+				let num2 = document.getElementById('num2').value;
+				console.log(num1);
+				console.log(num2);
+				
+				let result = parseInt(num1) / parseInt(num2);
+				console.log('나누기 : ' + result)
+				let output = document.getElementById('output');
+				output.innerHTML = result;
+			}
+			
+			// 초기화 버튼
+			function reset() {
+				let output = document.getElementById('output');
+				
+				document.getElementById('num1').value = "";
+				document.getElementById('num2').value = "";				
+				output.innerHTML = "";
+			}
+		</script>
+	</body>
+</html>

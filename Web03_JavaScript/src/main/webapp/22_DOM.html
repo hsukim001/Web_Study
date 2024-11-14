@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DOM</title>
+</head>
+<body>
+	<h1>자바스크립트 DOM(Document Object Model)</h1>
+	<input id="input" type="text" value="hello">
+	<p id="para" style="color : white; background-color : pink;">
+	여기는 <span style="font-weight: bold; color: black;">단락</span>입니다.
+	</p>
+	<div id="output" style="border: 1px solid grey"></div>
+	
+	<script>
+	// HTML DOM(Document Object Model)
+	// - 표준 객체 모델
+	// - HTML을 위한 프로그래밍 인터페이스
+	// - 모든 HTML 요소의 프로퍼티
+	// - 모든 HTML에 접근하는 메소드
+	// - 모든 HTML을 위한 이벤트
+	
+	let output = document.getElementById('output');
+	let para = document.getElementById('para');
+	let input = document.getElementById('input');
+	
+	// HTML 요소가 가지고 있는 content : innerHTML을 사용하여 읽기/쓰기
+	output.innerHTML += para.innerHTML + '<br>';
+	// HTML 요소의 속성(attribute) : element.attribute
+	output.innerHTML += para.id + '<br>';
+	output.innerHTML += 'input value : ' + input.value + '<br>';
+	// HTML 요소의 style 속성 : element.style.property
+	output.innerHTML += para.style.color + '<br>';
+	
+	//HTML 요소 변셩하기
+	input.value = '요소 변경됨';
+	para.style.color = 'red';
+	para.style.backgroundColor = 'white';
+	
+	// HTML DOM을 이용한 요소 접근 방법
+	output.innerHTML += 'tagName : ' + para.tagName + '<br>';
+	output.innerHTML += 'parentElement : ' + para.parentElement + '<br>';
+	
+	// body의 backgroundColor를 lightgrey로 변경
+	para.parentElement.style.backgroundColor = 'lightgrey';
+	// 자식 요소 : index로 찾아간다.
+	output.innerHTML += 'children : ' + para.children[0].innerHTML + '<br>';
+	// 주변 요소
+	output.innerHTML += para.previousElementSibling + '<br>';
+	output.innerHTML += para.nextElementSibling + '<br>';
+	
+	</script>
+	
+	
+</body>
+</html>

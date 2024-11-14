@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Calendar</title>
+  <style>
+    /* 기본 스타일 설정 */
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .calendar {
+      width: 300px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .calendar-body {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      margin-top: 10px;
+    }
+    .day {
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .day:hover {
+      background-color: #f0f0f0;
+    }
+    .selected {
+      background-color: #007bff;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<div class="calendar">
+  <div class="calendar-header">
+    <button onclick="prevMonth()">Prev</button>
+    <h3 id="monthYear"></h3>
+    <button onclick="nextMonth()">Next</button>
+  </div>
+  <div class="calendar-body" id="calendarBody">
+    <!-- 날짜가 여기에 추가됩니다 -->
+  </div>
+</div>
+
+<script>
+  // 현재 날짜
+  let today = new Date();
+  let currentMonth = today.getMonth();
+  let currentYear = today.getFullYear();
+
+  const monthYear = document.getElementById("monthYear");
+  const calendarBody = document.getElementById("calendarBody");
+
+  // 월과 연도를 설정하고 달력을 업데이트하는 함수
+  function showCalendar(month, year) {
+    // 월 및 연도 표시
+    monthYear.innerText = `${year}년 ${month + 1}월`;
+
+    // 기존 날짜 지우기
+    calendarBody.innerHTML = "";
+
+    // 첫날과 마지막 날
+    const firstDay = new Date(year, month).getDay();
+    const daysInMonth = 32 - new Date(year, month, 32).getDate();
+
+    // 날짜 생성
+    for (let i = 0; i < firstDay; i++) {
+      const emptyCell = document.createElement("div");
+      calendarBody.appendChild(emptyCell);
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateCell = document.createElement("div");
+      dateCell.classList.add("day");
+      dateCell.innerText = day;
+      dateCell.addEventListener("click", () => selectDate(day, month, year));
+      calendarBody.appendChild(dateCell);
+    }
+  }
+
+  // 날짜 선택 시
+  function selectDate(day, month, year) {
+    // 콘솔 및 팝업으로 선택한 날짜 표시
+    console.clear();
+    console.log(`선택한 날짜: ${year}-${month + 1}-${day}`);
+    alert(`선택한 날짜: ${year}-${month + 1}-${day}`);
+    
+    // 이전 선택 제거 후 현재 선택 스타일 추가
+    document.querySelectorAll(".day").forEach(cell => cell.classList.remove("selected"));
+    event.target.classList.add("selected");
+  }
+
+  // 이전 달로 이동
+  function prevMonth() {
+    currentMonth--;
+    if (currentMonth < 0) {
+      currentMonth = 11;
+      currentYear--;
+    }
+    showCalendar(currentMonth, currentYear);
+  }
+
+  // 다음 달로 이동
+  function nextMonth() {
+    currentMonth++;
+    if (currentMonth > 11) {
+      currentMonth = 0;
+      currentYear++;
+    }
+    showCalendar(currentMonth, currentYear);
+  }
+
+  // 초기 달력 표시
+  showCalendar(currentMonth, currentYear);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<!-- 
+연락처 프로그램 만들기
+- 입력, 전체 검색, 삭제 버튼을 이용한 연락처 프로그램
+입력을 누르면 : 
+'입력 완료' 알림창뜨면서, 정보 등록 
+전체검색을 누르면 :
+[0번] 이름 : ~~, 연락처 : ~~, 이메일 : ~~
+[1번] 이름 : ~~, 연락처 : ~~, 이메일 : ~~
+[2번] 이름 : ~~, 연락처 : ~~, 이메일 : ~~
+인덱스 입력하고 삭제를 누르면 :
+'삭제 완료' 알림창뜨면서, 정보 삭제 
+ -->
+<style>
+.border {
+	border-bottom : 2px solid gray;
+}
+</style>
+
+<head>
+<meta charset="UTF-8">
+<title>연락처 프로그램</title>
+</head>
+<body>
+	<h1>연락처 프로그램</h1>
+	<div class="border">
+		<p>이름 : <input type="text" id="nameInput"></p>
+		<p>연락처 : <input type="text" id="phoneInput"></p>
+		<p>이메일 : <input type="text" id="emailInput"></p>
+		
+		<div style="margin-bottom : 10px">
+			<button onclick="insert()">입력</button>
+			<button onclick="searchList()">전체검색</button>
+			<p style="display : inline-block">인덱스 : <input type="number" id="indexInput" style="display : inline-block"></p>
+			<button onclick="deleteByIndex()">삭제</button>
+		</div>
+	</div>
+	<div id="output"></div>
+	
+	<script type="text/javascript">
+		let output = document.getElementById('output');
+		
+		let list = {
+				name : [],
+				phone : [],
+				email : [],
+				count : 0,
+		}
+		
+		// 전체검색
+		function searchList() {
+			window.alert("전체검색")
+			output.innerHTML = "";
+			for(let i = 0; i < list.count; i++) {
+				output.innerHTML += i + "번> " + "이름 : " + list.name[i] + " | " + "전화번호 : " + list.phone[i] + " | " + "이메일 : " + list.email[i] + '<br>'
+			}
+		}
+				
+		// 입력
+		function insert() {
+			let nameInput = document.getElementById('nameInput').value
+			let phoneInput = document.getElementById('phoneInput').value
+			let emailInput = document.getElementById('emailInput').value
+			
+			list.name.push(nameInput);
+			list.phone.push(phoneInput);
+			list.email.push(emailInput);
+			
+			output.innerHTML += list.count + "번> " + "이름 : " + nameInput + " | " + "전화번호 : " + phoneInput + " | " + "이메일 : " + emailInput + '<br>';			
+			list.count++;
+		}
+		
+		// 삭제(인덱스)
+		function deleteByIndex() {
+			let indexInput = document.getElementById('indexInput').value;
+			
+			if(indexInput < list.count && indexInput >= 0){
+				if(list.name.length > 0 && list.phone.length > 0 && list.phone.length > 0) {
+					list.name.splice(indexInput, 1);
+					list.phone.splice(indexInput, 1);
+					list.email.splice(indexInput, 1);
+					list.count--;
+					
+					searchList();					
+				} else {
+					window.alert("등록되어있는 연락처가 존재하지 않습니다.")
+				}
+			} else {
+				window.alert("삭제할 인덱스를 다시 입력해주세요.")
+			}
+		}
+	</script>
+	
+</body>
+</html>
