@@ -17,13 +17,79 @@
 		<title>13번가</title>
 		
 		<style>
+			.prd_info ul{
+				list-style: none;
+			}
 			
+			.prd_egg {
+				border : 1px solid black;
+				width : 80px;
+				border: 10px solid balck;
+			}
+			
+			.prd_meat {
+				border : 1px solid black;
+				width : 80px;
+				border: 10px solid balck;
+			}
+			
+			.shopping_cart {
+				border : 1px solid black;
+				width : 500px;
+				height : 500px;
+				border: 10px solid balck;
+			}
+			
+			.shopping_list {
+				
+			}
 		</style>
 	</head>
 	<body>
 		<form class="prd_info">
-			<span>상품 정보</span>
-			<input type="">
+			<div>
+				<span>상품 정보</span>
+			</div>
+			<!-- 상품 리스트 -->
+			<div>
+				<ul>
+					<li>
+						<div class="prd_egg">
+							<div>
+								<span>달걀</span>
+							</div>
+							<div>
+								<div>
+									<span>판매가</span>						
+								</div>
+								<div>
+									<span>7500</span><span>원</span>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="prd_meat">
+							<div>
+								<span>고기 1근</span>
+							</div>
+							<div>
+								<span>판매가</span>
+							</div>
+							<div>
+								<span>10000</span><span>원</span>
+							</div>
+						</div>
+					</li>
+				</ul>
+				<div class="shopping_cart">
+					<span>장바구니</span>
+					<div class="shopping_list">
+						<span>장바구니 목록</span>
+					</div>
+				</div>
+			</div>
+			
 		</form>
 	</body>
 </html>
