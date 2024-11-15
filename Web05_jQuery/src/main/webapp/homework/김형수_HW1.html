@@ -17,79 +17,136 @@
 		<title>13번가</title>
 		
 		<style>
-			.prd_info ul{
+			.prd_info_cl ul{
 				list-style: none;
 			}
 			
-			.prd_egg {
+			.prd_egg_cl {
 				border : 1px solid black;
 				width : 80px;
 				border: 10px solid balck;
 			}
 			
-			.prd_meat {
+			.prd_meat_cl {
 				border : 1px solid black;
 				width : 80px;
 				border: 10px solid balck;
 			}
 			
-			.shopping_cart {
+			.shopping_cart_cl {
 				border : 1px solid black;
 				width : 500px;
 				height : 500px;
 				border: 10px solid balck;
+				list-style: none;
 			}
 			
-			.shopping_list {
+			.shopping_list_cl {
 				
 			}
 		</style>
 	</head>
 	<body>
-		<form class="prd_info">
+		<form class="prd_info_cl" id="prd_info">
 			<div>
 				<span>상품 정보</span>
 			</div>
 			<!-- 상품 리스트 -->
 			<div>
-				<ul>
-					<li>
-						<div class="prd_egg">
-							<div>
-								<span>달걀</span>
-							</div>
-							<div>
-								<div>
-									<span>판매가</span>						
-								</div>
-								<div>
-									<span>7500</span><span>원</span>
-								</div>
-							</div>
+				<ul id="prd_list">
+					<li class="prd_egg_cl">
+						<div class="info">
+							<span class="name">달걀</span><br>
+							<span>판매가</span><br>				
+							<span class="price">7500</span><span>원</span>
+							<input type="hidden" class="prd_num" value="1">
 						</div>
 					</li>
-					<li>
-						<div class="prd_meat">
-							<div>
-								<span>고기 1근</span>
-							</div>
-							<div>
-								<span>판매가</span>
-							</div>
-							<div>
-								<span>10000</span><span>원</span>
-							</div>
+					<li class="prd_meat_cl">
+						<div class="info">
+							<span class="name">고기 1근</span><br>
+							<span>판매가</span><bR>
+							<span class="price">10000</span><span>원</span>
+							<input type="hidden" class="prd_num" value="2">
 						</div>
 					</li>
 				</ul>
-				<div class="shopping_cart">
+				<ul class="shopping_cart_cl">
 					<span>장바구니</span>
-					<div class="shopping_list">
-						<span>장바구니 목록</span>
-					</div>
-				</div>
+				</ul>
 			</div>
 			
 		</form>
 	</body>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			console.log("ready");
+			
+			let totalPay = 0;
+			let totalCount = 0;
+			
+			// 상품 클릭 이벤트
+			$('#prd_list').on('click', 'li .info', function(){
+				console.log(this);
+				// 상품 이름, 가격 검색
+				let optionName = $(this).find('.name').text();
+				let optionPrice = $(this).find('.price').text();
+				let optionNum = $(this).find('.prd_num').val();
+				console.log(optionName);
+				console.log(optionPrice);
+				console.log(optionNum);
+				
+				// 태그 구성 코드
+				let itemList = $('<li class="item_list"></li>').data('data_option_num', optionNum);
+				let selectOptionName = $('<span class="option_name"></span>');
+				let selectOptionPrice = $('<span class="option_price"></span>');
+				let inBr = $('<br>');
+				let priceTitle = $('<span class="price_span">판매가 : </span>');
+				let prdCount = $('<input type="number" name="prdCount" class="prd_count" value="1">');
+				let selectCount = $('<span></span>');
+				let plusBtn = $('<button class="pluse_btn" onclick="">+</button>');
+				let minerBtn = $('<button class="btn" onclick="prdMiner()">-</button>');
+				
+				// 상품 선택 유무 확인
+				let isSelected = false;
+				$('li').each(function(){
+					if(optionNum == $(this).data('data_option_num')) {
+						alert('이미 장바구니에 담겨있는 상품입니다.');
+						isSelected = true;
+					}
+				});
+				if(isSelected == true) {
+					return;
+				}
+				
+				// 태그 출력
+				selectOptionName.text(optionName);
+				selectOptionPrice.text(optionPrice);
+				// 선택 상품 장바구니 출력
+				itemList.append(selectOptionName, inBr, priceTitle, selectOptionPrice);
+				// 입력,버튼 출력
+				itemList.append(prdCount, plusBtn, minerBtn);
+				
+				$('.shopping_cart_cl').append(itemList);
+				
+				totalCount++;
+				
+				let oldCount;
+				prdCount.focus(function(){
+					oldCount = $(this).val();
+					console.log("이전 값 : ");
+				}).change(function(){
+					
+				})
+				
+				// pluse button event
+				plusBtn.click(function(){
+					
+				});
+			});
+			
+		});
+	
+
+	</script>
 </html>
