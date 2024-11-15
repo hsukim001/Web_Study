@@ -104,8 +104,8 @@
 				let priceTitle = $('<span class="price_span">판매가 : </span>');
 				let prdCount = $('<input type="number" name="prdCount" class="prd_count" value="1">');
 				let selectCount = $('<span></span>');
-				let plusBtn = $('<button class="pluse_btn" onclick="">+</button>');
-				let minerBtn = $('<button class="btn" onclick="prdMiner()">-</button>');
+				let plusBtn = $('<button type="button" class="pluse_btn">+</button>');
+				let minerBtn = $('<button type="button" class="miner_btn">-</button>');
 				
 				// 상품 선택 유무 확인
 				let isSelected = false;
@@ -131,19 +131,12 @@
 				
 				totalCount++;
 				
-				let oldCount;
-				prdCount.focus(function(){
-					oldCount = $(this).val();
-					console.log("이전 값 : ");
-				}).change(function(){
-					
-				})
-				
 				// pluse button event
-				plusBtn.click(function(){
-					
+				$('pluse_btn').click(function(){
+					console.log('btn on');
 				});
 			});
+			
 			
 		});
 	
