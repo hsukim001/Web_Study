@@ -34,11 +34,13 @@ public class MainServlet extends HttpServlet {
     
     // doGet() : HTTP GET 요청이 발생될 때마다 호출
     // 웹 브라우저에서 URL을 입력하여 웹페이지를 불러올때 GET 방식을 사용하여 불러온다.
+    // 클라이언트에서 서버로 데이터를 줄때 사용한다.
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println(CLASSNAME + " doGet()");
 	}
 
 	// doPost() : HTTP POST 요청이 발생될 때마다 호출
+	// 서버에서 클라이언트로 데이터를 전송할때 사용한다.
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println(CLASSNAME + " doPost()");
 	}
