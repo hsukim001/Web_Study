@@ -16,22 +16,27 @@ public class LoginServlet extends HttpServlet {
        
     public LoginServlet() {
     	dao = MemberDAOImple.getInstance();
+    	System.out.println("LoginServlet()");
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.sendRedirect("/Homepage_khs/login.jsp");
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userid = request.getParameter("userid");
 		String password = request.getParameter("password");
 		MemberVO vo = dao.selectUser(userid);
 		
 		if(userid.equals(vo.getUserid()) && password.equals(vo.getPassword())) {
-			System.out.println("사용자 조회 성공");
+			System.out.println("login check ok");
+			
+			HttpSession session = request.getSession();
 			session.setAttribute("userid", userid);
 			session.setMaxInactiveInterval(60);
-			response.sendRedirect("/Homepage_khs/memberResult.jsp");
+			
+			System.out.println(session.getId());
+			response.sendRedirect("/Homepage_khs/loginResult.jsp");
 		} else {
 			response.sendRedirect("/Homepage_khs/login.jsp");
 		}

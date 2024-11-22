@@ -52,6 +52,14 @@ public class MemberDAOImple implements MemberDAO, DBConnection{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		
@@ -101,7 +109,40 @@ public class MemberDAOImple implements MemberDAO, DBConnection{
 	// 회원 정보 수정(parameter : MemberVO)
 	@Override
 	public int updateMember(MemberVO vo) {
-		return 0;
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			DriverManager.registerDriver(new OracleDriver());
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			System.out.println("DB 연결");
+			
+			pstmt = conn.prepareStatement(SQL_UPDATE);
+			pstmt.setString(1, vo.getPassword());
+			pstmt.setString(2, vo.getEmail());
+			pstmt.setString(3, vo.getEmailAgree());
+			pstmt.setString(4, vo.getInterestJoin());
+			pstmt.setString(5, vo.getPhone());
+			pstmt.setString(6, vo.getIntroduce());
+			pstmt.setString(7, vo.getUserid());
+			
+			result = pstmt.executeUpdate();
+			if(result == 1) {
+				System.out.println(result + "행 수정");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
 	}
 
 	// 회원 삭제(parameter : userid)

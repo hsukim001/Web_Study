@@ -29,16 +29,15 @@ public class LoginSessionFilter extends HttpFilter implements Filter {
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpServletResponse httpResponse = (HttpServletResponse) request;
-		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		HttpServletResponse httpResponse = (HttpServletResponse) response;
+		HttpServletRequest req = (HttpServletRequest) request;
+		
+		HttpSession session = req.getSession();
 
-		HttpSession session = httpRequest.getSession();
 		String userid = (String) session.getAttribute("userid");
-		System.out.println("userid : " + userid);
 		if(userid == null) {
 			System.out.println("로그인 세션 없음");
 			httpResponse.sendRedirect("/Homepage_khs/login.jsp");
-			return;
 		}
 		chain.doFilter(request, response);
 	}

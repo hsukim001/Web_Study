@@ -25,6 +25,9 @@
   </filter>
   <filter-mapping>
   	<filter-name>LoginSessionFilter</filter-name>
-  	<url-pattern>/*</url-pattern>
+  	<url-pattern>/memberResult.jsp</url-pattern>
+  	<url-pattern>/memberUpdate.jsp</url-pattern>
+  	<url-pattern>/loginResult.jsp</url-pattern>
   </filter-mapping>
+  
 </web-app>

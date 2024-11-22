@@ -27,7 +27,7 @@ public class CharFilter extends HttpFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// UTF-8 인코딩
 		request.setCharacterEncoding("UTF-8");
-//		response.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		chain.doFilter(request, response);
 	}
 

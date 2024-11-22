@@ -14,6 +14,7 @@ public class RegisterServlet extends HttpServlet {
        
     public RegisterServlet() {
     	dao = MemberDAOImple.getInstance();
+    	System.out.println("RegisterServlet");
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
