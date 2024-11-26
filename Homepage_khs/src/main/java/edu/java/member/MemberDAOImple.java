@@ -148,7 +148,35 @@ public class MemberDAOImple implements MemberDAO, DBConnection{
 	// 회원 삭제(parameter : userid)
 	@Override
 	public int deleteMember(String userid) {
-		return 0;
+		int result = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			DriverManager.registerDriver(new OracleDriver());
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			System.out.println("DB 연결");
+			
+			pstmt = conn.prepareStatement(SQL_DELETE);
+			pstmt.setString(1, userid);
+			
+			result = pstmt.executeUpdate();
+			if(result == 1) {
+				System.out.println(result + "행 삭제");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
 	}
 	
 }

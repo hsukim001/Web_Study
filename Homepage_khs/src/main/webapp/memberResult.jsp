@@ -30,7 +30,7 @@
 		    <input type="submit" value="수정">
 		</form>
 		<form action="memberDelete.do" method="get">
-			<input type="submit" value="탈퇴">
+			<input type="submit" value="삭제">
 		</form>
 	</div>
 

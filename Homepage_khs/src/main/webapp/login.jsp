@@ -9,10 +9,10 @@
 <body>
 	<h2>로그인</h2>
 	<form action="login.do" method="post">
-		<label for="userid">User ID:</label>
+		<label for="userid">아이디:</label>
 	    <input type="text" id="userid" name="userid" required><br>
 	    
-	    <label for="password">Password:</label>
+	    <label for="password">비밀번호:</label>
 	    <input type="password" id="password" name="password" required><br>
 	    
 	    <input type="submit" value="Submit">
