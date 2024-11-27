@@ -16,7 +16,7 @@
    - 배열, 컬렉션, 맵 등에 저장되어 있는 값을 순차적으로 처리
    - 기본 형태
       <c:forEach var="변수" items="아이템"
-         begin="시작값" end="끝값" step="중간값">
+         begin="시작값" end="끝값" step="증감값">
          ${변수}
       </c:forEach>   
    - items : array, collection, map 형태의 데이터를 적용
