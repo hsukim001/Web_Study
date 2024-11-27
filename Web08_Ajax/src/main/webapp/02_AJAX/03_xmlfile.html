@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>XML 파일 호출</title>
+</head>
+<body>
+	<h2>XML 파일 호출</h2>
+	<button type="button" onclick="loadDoc()">CD 컬렉션 호출</button>
+	<br>
+	<table id="output"></table>
+	<script type="text/javascript">
+		function loadDoc() {
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					console.log(this.responseXML); // 전송된 정보에서 XML 파일 데이터 저장
+					myFunction(this.responseXML);
+				}
+			}
+			xhttp.open("GET", "03_cd_catalog.xml", true);
+			xhttp.send();
+		}
+
+		function myFunction(xmlDoc) {
+			var table = "<tr><th>Artist</th><th>Title</th><th>Country</th></tr>";
+			var x = xmlDoc.getElementsByTagName("CD");
+			var i;
+
+			for (i = 0; i < x.length; i++) {
+				table += "<tr><td>" + x[i].getElementsByTagName("ARTIST")[0].childNodes[0].nodeValue + "</td>" + "<td>"
+						+ x[i].getElementsByTagName("TITLE")[0].childNodes[0].nodeValue + "</td>" + "<td>"
+						+ x[i].getElementsByTagName("COUNTRY")[0].childNodes[0].nodeValue + "</td></tr>";
+			}
+
+			document.getElementById("output").innerHTML = table;
+		}
+	</script>
+</body>
+</html>

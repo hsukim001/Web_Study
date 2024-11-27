@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>XMLHttpRequest GET/POST</title>
+</head>
+<body>
+	<h2>XMLHttpRequest 요청</h2>
+	<button type="button" onclick="loadDocGet()">get 데이터 요청</button>
+	<button type="button" onclick="loadDocPost()">post 데이터 요청</button>
+	
+	<p id="output"></p>
+	
+	<script type="text/javascript">
+		function loadDocGet() {
+			var xhttp = new XMLHttpRequest(); // 브라우저 내장 request 객체
+			xhttp.onreadystatechange = function() {
+				// 요청이 완료되었고, 응답이 성공한 경우
+				if (this.readyState == 4 && this.status == 200) {
+					// 개발자가 데이터 처리를 위해 코드 작성
+					console.log(this.responseText);
+					// this.responseText : 응답 데이터를 문자열로 변환
+					document.getElementById("output").innerHTML = this.responseText;
+				}
+			}
+
+			xhttp.open("GET", "02_date.jsp?method=get&content=Hello", true);
+			xhttp.send();
+		}
+		
+		// POST 방식은 Content-Type을 application/x-www-form-urlencoded을 설정해야한다.
+		function loadDocPost() {
+			var xhttp = new XMLHttpRequest(); // 브라우저 내장 request 객체
+			xhttp.onreadystatechange = function() {
+				// 요청이 완료되었고, 응답이 성공한 경우
+				if (this.readyState == 4 && this.status == 200) {
+					// 개발자가 데이터 처리를 위해 코드 작성
+					console.log(this.responseText);
+					// this.responseText : 응답 데이터를 문자열로 변환
+					document.getElementById("output").innerHTML = this.responseText;
+				}
+			}
+			
+			xhttp.open("POST", "02_date.jsp", true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send("method=post&content=Hello");
+		}
+	</script>
+</body>
+</html>
