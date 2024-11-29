@@ -29,5 +29,6 @@
 			<input type="submit" value="수정">
 		</div>
 	</form>
+	<a href="detail.do?boardId=${vo.boardId }"><input type="submit" value="취소"></a>
 </body>
 </html>
