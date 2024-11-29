@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.7.1.js">
+</script>
+<title>로그인 페이지</title>
+</head>
+<body>
+	<h1>로그인 페이지</h1>
+	<div>
+		아이디 : <input type="text" id="userid"><br>
+		비밀번호 : <input type="password" id="password"><br>
+		<button id="loginBtn">로그인</button>
+		<!-- 
+			비동기 방식은 form태그를 사용하지 않는다.
+			http 통신으로 오가는 데이터는 javascript를 사용해야한다.(무조건) 
+		-->
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#loginBtn').click(function(){
+				let userid = $('#userid').val();
+				let password = $('#password').val();
+				
+				// JSON으로 parse 하기 이전에 처리할 데이터를 javaScript 객체로 담아서 parse을 해야한다.
+				let obj = {
+						"userid" : userid,
+						"password" : password
+				};
+				
+				// ajax 요청 전송
+				$.ajax({
+					type : 'post',
+					url : '../login.do',
+					data : {'obj' : JSON.stringify(obj)}, // JSON으로 변환
+					success : function(result){
+						if(result == 'success') {
+							alert('로그인 정보 일치');
+						} else {
+							alert('로그인 정보 불일치');
+						}
+					}
+				}); // end ajax()
+				
+			}); // end loginBtn.click()
+		}); // end document()
+	</script>
+</body>
+</html>
