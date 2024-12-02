@@ -22,4 +22,6 @@ public interface BoardDAO {
 	int delete(int boardId);
 	
 	List<BoardVO> select(PageCriteria criteria);
+	
+	int getTotalCount();
 }

@@ -14,6 +14,7 @@ import edu.web.domain.BoardVO;
 import edu.web.persistence.BoardDAO;
 import edu.web.persistence.BoardDAOImple;
 import edu.web.util.PageCriteria;
+import edu.web.util.PageMaker;
 
 @WebServlet("*.do") // *.do : ~.do로 요청된 HTTP 호출에 대해 반응
 public class BoardController extends HttpServlet {
@@ -122,6 +123,15 @@ public class BoardController extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 		
 		request.setAttribute("list", list);
+		
+		PageMaker pageMaker = new PageMaker();
+		int totalCount = dao.getTotalCount();
+		pageMaker.setTotalCount(totalCount);
+		pageMaker.setCriteria(criteria);
+		pageMaker.setPageData(); // 적용된 값들로 pageMaker의 필드 값 계산
+		
+		request.setAttribute("pageMaker", pageMaker);
+		
 		dispatcher.forward(request, response);
 	}
 	

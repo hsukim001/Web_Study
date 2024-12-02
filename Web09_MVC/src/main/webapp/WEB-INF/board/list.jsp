@@ -44,5 +44,19 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	
+	<ul>
+		<!-- 이전 버튼 및 이동 -->
+		<c:if test="${pageMaker.hasPrev }">
+			<li><a href="list.do?page=${pageMaker.startPageNo - 1 }">이전</a></li>
+		</c:if>	
+		<c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }" var="num">
+			<li><a href="list.do?page=${num }">${num }</a></li>		
+		</c:forEach>
+		<!-- 다음 버튼 및 이동 -->
+		<c:if test="${pageMaker.hasNext }">
+			<li><a href="list.do?page=${pageMaker.endPageNo + 1 }">다음</a></li>
+		</c:if>	
+	</ul>
 </body>
 </html>

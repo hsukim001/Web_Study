@@ -46,13 +46,13 @@ public class PageMaker {
 		return hasPrev;
 	}
 	
-	public boolean isHasNext() {
+	public boolean isHasNext() { // boolean 타입의 메서드는 자동적으로 is와 매칭 되게 되면서 직접 사용하지 않더라도 우회되어 사용된다.
 		return hasNext;
 	}
 	
 	// startPageNo, endPageNo, hasPrev, hasNext 값을 계산 및 세팅
 	public void setPageData() {
-		int totalLinkNo = (int) Math.ceil((double) totalCount / criteria.getNumsPerPage());
+		int totalLinkNo = (int) Math.ceil((double) totalCount / criteria.getNumsPerPage()); // Math.ceil 메서드를 이용하여 소수점 올림 처리
 		int temp = (int) Math.ceil((double) criteria.getPage() / numsOfPageLinks) * numsOfPageLinks;
 		
 		if (temp > totalLinkNo) {
@@ -75,7 +75,7 @@ public class PageMaker {
 			hasNext = true;
 		}
 		// Math.ceil (올림)
-		// Math.floor (버림
+		// Math.floor (버림)
 		
 	}
 	

@@ -186,10 +186,10 @@ public class BoardDAOImple implements BoardDAO, BoardQuery {
 		try {
 			conn = ConnMgr.getConnection();
 			pstmt = conn.prepareStatement(SQL_SELECT_PAGESCOPE);
-			
+
 			pstmt.setInt(1, criteria.getStart());
 			pstmt.setInt(2, criteria.getEnd());
-			
+
 			rs = pstmt.executeQuery();
 
 			int boardId;
@@ -217,6 +217,31 @@ public class BoardDAOImple implements BoardDAO, BoardQuery {
 		}
 
 		return list;
+	}
+
+	@Override
+	public int getTotalCount() {
+		int count = 0;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = ConnMgr.getConnection();
+			pstmt = conn.prepareStatement(SQL_TOTAL_CNT);
+
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt("total_cnt");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			ConnMgr.close(conn, pstmt, rs);
+		}
+
+		return count;
 	}
 
 }
