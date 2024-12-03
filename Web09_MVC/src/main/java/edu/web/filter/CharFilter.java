@@ -15,7 +15,7 @@ import javax.servlet.http.HttpFilter;
 public class CharFilter extends HttpFilter implements Filter {
 
     public CharFilter() {
-
+    	
     }
 
 

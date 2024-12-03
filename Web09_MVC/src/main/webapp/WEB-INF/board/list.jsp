@@ -24,8 +24,13 @@
 </head>
 <body>
 	<h1>게시판 메인</h1>
+	<c:if test="${empty sessionScope.memberId }">
+		<a href="login.go">로그인</a>
+	</c:if>
+	<c:if test="${not empty sessionScope.memberId }">
+		<a href="logout.go">로그아웃</a>
+	</c:if>
 	<a href="register.do"><input type="button" value="글 작성"></a>
-	
 	<table>
 		<tr>
 			<th style="width : 60px">번호</th>

@@ -106,39 +106,25 @@ public class ReplyController extends HttpServlet {
 		// toString() or toJSONString() 둘다 가능
 	}
 
+	// 전송된 데이터를 DB에 전달햐여 댓글 수정
+	// 수정 후 성공 메시지를 클라이언트로 전송
 	private void replyUpdate(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		System.out.println("replyUpdate()");
-		String obj = request.getParameter("obj");
-		System.out.println(obj);
+		int replyId = Integer.parseInt(request.getParameter("replyId"));
+		String replyContent = request.getParameter("replyContent");
 		
-		JSONParser parser = new JSONParser();
-		try {
-			JSONObject jsonObject = (JSONObject) parser.parse(obj);
-			
-			int replyId = Integer.parseInt((String) jsonObject.get("replyId"));
-			String replyContent = (String) jsonObject.get("replyContent");
-			
-			ReplyVO vo = new ReplyVO(replyId, 0, null, replyContent, null);
-			System.out.println(vo);
-			int result = dao.update(vo);
-			
-			if(result == 1) {
-				response.getWriter().append("success");
-			}
-		} catch (ParseException e) {
-			e.printStackTrace();
+		ReplyVO vo = new ReplyVO(replyId, 0, "", replyContent, null);
+		int result = dao.update(vo);
+		if(result == 1) {
+			response.getWriter().append("success");
 		}
 	}
 
 	private void replyDelete(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		System.out.println("replyDelete()");
 		int replyId = Integer.parseInt(request.getParameter("replyId"));
-		System.out.println(replyId);
 		
 		int result = dao.delete(replyId);
-		
 		if(result == 1) {
 			response.getWriter().append("success");
 		}

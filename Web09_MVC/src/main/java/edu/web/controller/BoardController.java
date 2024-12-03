@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import edu.web.domain.BoardVO;
 import edu.web.persistence.BoardDAO;
@@ -78,10 +79,20 @@ public class BoardController extends HttpServlet {
 	private void registerGET(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("registerGET()");
+		
+		// 로그인 세션 체크
+		HttpSession session = request.getSession();
+		String memberId = (String) session.getAttribute("memberId");
+		
+		if(memberId != null) { // 로그인 상태
+			String path = BOARD_URL + REGISTER + EXTENSION;
+			RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+			dispatcher.forward(request, response);			
+		} else { // 로그아웃 상태
+			// 로그인 페이지로 이동
+			response.sendRedirect("login.go?targetURL=" + REGISTER + SERVER_EXTENSION);
+		}
 
-		String path = BOARD_URL + REGISTER + EXTENSION;
-		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-		dispatcher.forward(request, response);
 	}
 
 	// register.jsp form에서 전송된 데이터를 DB 테이블에 등록

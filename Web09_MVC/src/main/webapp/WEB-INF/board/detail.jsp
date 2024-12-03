@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,21 +26,30 @@
 	</div>
 	
 	<a href="index.jsp"><input type="button" value="글 목록"></a>
-	<a href="update.do?boardId=${vo.boardId }"><input type="button" value="수정"></a>
-	<form action="delete.do" method="POST">
-		<input type="hidden" name="boardId" value="${vo.boardId }">
-		<input type="submit" value="삭제">
-	</form>
+	<c:if test="${sessionScope.memberId == vo.memberId }">
+		<a href="update.do?boardId=${vo.boardId }"><input type="button" value="수정"></a>
+		<form action="delete.do" method="POST">
+			<input type="hidden" name="boardId" value="${vo.boardId }">
+			<input type="submit" value="삭제">
+		</form>	
+	</c:if>
 	
-	<!-- form태그는 동기방식에서 사용되므로 댓글창은 비동기방식이기때문에 form태그를 사용하지 않음 -->
-	<div style="text-align: center;">
-		<!-- 유지보수측면에서는 input태그에 boardId를 미리 세팅하는것은 좋지 않지만 공부용으로 직관적으로 코드를 보기위해 사용 -->
-		<!-- input 태그는 웹브라우저 개발자 도구에서 값이 변경이 가능하기 때문에 웹 개발시 input태그 값변경에관해서 막아놔야함 -->
-		<input type="hidden" id="boardId" value="${vo.boardId }">
-		<input type="text" id="memberId">
-		<input type="text" id="replyContent">
-		<button id="btnAdd">작성</button>
-	</div>
+	<c:if test="${empty sessionScope.memberId }">
+		* 댓글은 로그인이 필요한 서비스입니다.
+		<a href="login.go">로그인하기</a>
+	</c:if>
+	
+	<input type="hidden" id="boardId" value="${vo.boardId }">
+	<c:if test="${not empty sessionScope.memberId }">
+		<!-- form태그는 동기방식에서 사용되므로 댓글창은 비동기방식이기때문에 form태그를 사용하지 않음 -->
+		<div style="text-align: center;">
+			<!-- 유지보수측면에서는 input태그에 boardId를 미리 세팅하는것은 좋지 않지만 공부용으로 직관적으로 코드를 보기위해 사용 -->
+			<!-- input 태그는 웹브라우저 개발자 도구에서 값이 변경이 가능하기 때문에 웹 개발시 input태그 값변경에관해서 막아놔야함 -->
+			<input type="text" id="memberId" value="${sessionScope.memberId }" readonly="readonly">
+			<input type="text" id="replyContent">
+			<button id="btnAdd">작성</button>
+		</div>
+	</c:if>
 	
 	<hr>
 	<div style="text-align: center;">
@@ -88,12 +98,25 @@
 				$.getJSON(url, function(data){
 					// console.log(data);
 					let list = ''; // 댓글 데이터를 HTML에 표현할 문자열 변수
+					let memberId = '${sessionScope.memberId}'; // javascript = el tag 형식으로 혼합하여 사용하는것은 추후 코드적으로 문제가 발생할수 있다.
+					console.log('memberId = ' + memberId);
+										
 					$(data).each(function(){
+						// 퀴즈 : 로그인한 사용자와 작성자가 같은 경우에
+						//		 댓글 수정/삭제가 가능하도록 구현
+						
 						// this : 컬렉션(배열)의 각 인덱스 데이터를 의미
 						console.log(this);
 						
 						// replyDateCreated는 String 타입이므로 date 타입으로 변경
 						let replyDateCreated = new Date(this.replyDateCreated);
+						let disabled = '';
+						let readonly = '';
+						
+						if(memberId != this.memberId) {
+							disabled = 'disabled';
+							readonly = 'readonly';
+						}
 						
 						list += '<div class="reply_item">'
 							+ '<pre>'
@@ -101,12 +124,12 @@
 							+ this.memberId
 							// + '&nbsp;&nbsp;' // 공백
 							+ '       ' // 공백
-							+ '<input type="text" id="replyContent" value="'+ this.replyContent +'">'
+							+ '<input type="text" id="replyContent" '+ readonly +' value="'+ this.replyContent +'">'
 							+ '       ' // 공백
 							+ replyDateCreated
 							+ '       ' // 공백
-							+ '<button class="btn_update">수정</button>'
-							+ '<button class="btn_delete">삭제</button>'
+							+ '<button class="btn_update" '+ disabled +'>수정</button>'
+							+ '<button class="btn_delete" '+ disabled +'>삭제</button>'
 							+ '</pre>'
 							+ '</div>';
 						
@@ -131,12 +154,18 @@
 						'replyId' : replyId,
 						'replyContent' : replyContent
 				};
-				
+								
+				// $.ajax로 송수신
 				$.ajax({
 					type : 'POST',
 					url : 'replies/update',
-					data : {'obj' : JSON.stringify(obj)},
+					// data : {'obj' : JSON.stringify(obj)}, // JSON 데이터 형식
+					data : { // 파라미터 데이터 형식
+						'replyId' : replyId,
+						'replyContent' : replyContent
+					},
 					success : function(result){
+						console.log(result);
 						if(result == 'success') {
 							alert('댓글이 수정 성공');
 							getAllReplies();
@@ -152,11 +181,15 @@
 				let replyId = $(this).prevAll('#replyId').val();
 				console.log('선택된 댓글 번호 : ' + replyId);
 				
+				// $.ajax로 송수신
 				$.ajax({
 					type : 'POST',
 					url : 'replies/delete',
-					data : {'replyId' : JSON.parse(replyId)},
+					data : {
+						'replyId' : replyId
+						},
 					success : function(result){
+						console.log(result);
 						if(result == 'success') {
 							alert('댓글 삭제 성공');
 							getAllReplies();
